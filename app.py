@@ -60,5 +60,15 @@ if uploaded_file is not None:
             
     except:
         pass
+    
+
+st.markdown("""
+            ---
+            Developed by Neo @ 2025.
+            
+            Nếu phát hiện lỗi tính toán, hãy báo cho tôi qua zalo nhé.
+            
+            Phone: không chín bảy hai ba bốn hai năm một tám.
+            """)
 
 
