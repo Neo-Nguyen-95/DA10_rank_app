@@ -51,8 +51,6 @@ st.dataframe(sample)
 #%% II. Upload File 
 st.markdown("""
             ### II. Tải file
-            
-            
             """)
 
 
@@ -72,15 +70,16 @@ if uploaded_file is not None:
                     Data của thầy/cô:
                         
                         """)
+                        
         st.write(data.head())
         
-       
-        
-        hlr = HLRanking(data)
         
         left, buff, right = st.columns([10, 1, 4])
         with left:
             "Kết quả xếp loại học lực:"
+            excel_include = st.checkbox('Tick nếu tính xếp loại "Xuất sắc"')
+            
+            hlr = HLRanking(data, excel_include=excel_include)
             st.dataframe(hlr.get_rank())
         with right:
             "Thống kê:"

@@ -7,12 +7,15 @@ def reach_rank(df, upper, lower):
 
 
 class HLRanking:
-    def __init__(self, df):
+    def __init__(self, df, excel_include=True):
         self.df = df
         self.df_score = df.iloc[:, -8:]
         
         # Excellent reach
-        self.reach_excel = reach_rank(self.df_score, upper=9, lower=8)
+        if excel_include == True:
+            self.reach_excel = reach_rank(self.df_score, upper=9, lower=8)
+        else:
+            self.reach_excel = 0
         
         # Good reach
         self.reach_good = reach_rank(self.df_score, upper=8, lower=6.5)
