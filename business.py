@@ -1,7 +1,7 @@
 def reach_rank(df, upper, lower):
     from_upper = (df >= upper).sum(axis='columns')
     less_lower = (df < lower).sum(axis='columns')
-    reach = (from_upper >= 6)*(less_lower == 0)
+    reach = (from_upper >= 6) & (less_lower == 0)
     
     return reach.astype(int)
 
@@ -30,7 +30,7 @@ class HLRanking:
                             self.reach_ok)
         
         mapping = {4: 'Xuất sắc',
-                   3: 'Giỏi',
+                   3: 'Tốt',
                    2: 'Khá',
                    1: 'Đạt',
                    0: 'Không Đạt'}
