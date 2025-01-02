@@ -9,18 +9,24 @@ hlr.get_stat()
 
 #%% APP
 # Title of the app
-st.title("Ứng Dụng Xếp Loại Học Lực")
+st.title("Ứng Dụng Đánh Giá Kết Quả Học Tập Theo Thông Tư 22/2021/TT-BGDĐT")
 st.markdown("""
-            *Lưu ý: chỉ sử dụng để đối chiếu kết quả.*
-            """)
-
-st.markdown("""
+            Ứng dụng hỗ trợ các thầy cô đánh giá kết quả học tập của học sinh một cách 
+            nhanh chóng và hiệu quả.
+            
+            **Cách sử dụng**:
+                
+            - Sử dụng app để xuất file đánh giá kết quả
+                
+            - Tự kiểm tra lại tính chính xác
+            
+            ### I. Chuẩn bị
             Chuẩn bị file tương tự giống như file mẫu bên dưới và 
             upload lên hệ thống.
             """)
 
 sample = pd.read_excel('data_sample.xlsx')
-st.write(sample)
+st.dataframe(sample)
  
 # Sidebar for user input
 st.sidebar.header("Upload Your Excel File")
