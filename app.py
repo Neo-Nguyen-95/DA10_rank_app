@@ -105,7 +105,6 @@ if uploaded_file is not None:
     except:
         pass
     
-
 st.sidebar.markdown("""
                     ---
             Developed by Neo @ 2025.
