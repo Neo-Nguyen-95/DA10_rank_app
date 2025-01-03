@@ -4,8 +4,13 @@ from business import HLRanking
 
 #%% I. Introduction & Usage
 st.title("Ứng Dụng Đánh Giá Kết Quả Học Tập Theo Thông Tư 22/2021/TT-BGDĐT")
-st.write("Ứng dụng hỗ trợ các thầy cô đánh giá kết quả học tập của học sinh một cách \
-nhanh chóng và hiệu quả.")
+st.markdown("""Ứng dụng hỗ trợ các thầy cô đánh giá kết quả học tập của học sinh một cách \
+nhanh chóng và hiệu quả.
+Hiện tại app đang chỉ hỗ trợ các môn học đánh giá bằng điểm vì cách đánh giá với 
+các môn học này phức tạp. Trong tương lai app sẽ cập nhật đánh giá tính cả đến 
+các môn đánh giá bằng nhận xét.
+
+""")
 
 st.sidebar.markdown("""
                     ### Cách sử dụng:
