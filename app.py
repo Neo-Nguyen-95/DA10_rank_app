@@ -33,18 +33,19 @@ st.sidebar.markdown("""
                     - Còn lại không xét danh hiệu khen thưởng.
                     """)
 
-st.markdown("""            
+st.markdown("""   
+            ---
             ### I. Chuẩn bị
             Chuẩn bị file tương tự giống như file mẫu bên dưới và 
             upload lên hệ thống.
             
             Các cột cần có là:
                 
-            |STT | Mã định danh | Họ và tên | (Ngày sinh) | (Giới tính) | Môn học x 8|
-            |- | - | - | - | - | - |
-            |... | ... | ... | ... | ... | ... |
-            |*Cần* | *Để trống nếu không có* | *Cần* | *Có hoặc không* | *Có hoặc không* | *Đủ 8 môn* |
-
+            |STT | Họ và tên | (Mã định danh; Ngày sinh; Giới tính) | Môn học x 8|
+            |- | - | - | - | 
+            |... | ... | ... | ... |
+            |*Cột cần có* | *Cột cần có* | *Các cột có thể có hoặc không* | *8 cột cho 8 môn* |
+ 
             
             Dưới đây là file mẫu, thầy cô có thể tham khảo.
             """)
@@ -54,6 +55,7 @@ st.dataframe(sample)
 
 #%% II. Upload File 
 st.markdown("""
+            ---
             ### II. Tải file
             """)
 
@@ -70,6 +72,7 @@ if uploaded_file is not None:
 
         # Displaying the data
         st.markdown("""
+                    ---
                     ### III. Kết quả phân tích
                     Data của thầy/cô:
                         
@@ -78,14 +81,23 @@ if uploaded_file is not None:
         st.write(data.head())
         
         
-        left, buff, right = st.columns([10, 1, 4])
+        left, buff, right = st.columns([14, 1, 5])
         with left:
+            st.markdown("""
+                        ---
+                        """)
             "**Kết quả xếp loại học lực:**"
-            lower_xs = st.number_input("Nhập điểm tối thiểu để xét danh hiệu xuất sắc:",
-                                       value=6.5)
+            lower_xs = st.number_input("Để xét danh hiệu Xuất sắc, ĐTB tất cả các môn cần phải trên:",
+                                       value=6.5,
+                                       min_value=6.5,
+                                       max_value=8.0,
+                                       step=0.5)
             hlr = HLRanking(data, lower_xs=lower_xs)
             st.dataframe(hlr.get_rank())
         with right:
+            st.markdown("""
+                        ---
+                        """)
             "**Thống kê:**"
             "Kết quả học tập"
             st.write(hlr.get_stat_KQHT())
@@ -105,8 +117,8 @@ if uploaded_file is not None:
     except:
         pass
     
-st.sidebar.markdown("""
-                    ---
+st.markdown("""
+            ---
             Developed by Neo @ 2025.
             
             Nếu phát hiện lỗi tính toán, hãy báo cho tôi qua zalo nhé.

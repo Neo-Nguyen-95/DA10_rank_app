@@ -47,7 +47,7 @@ class HLRanking:
         
     def get_rank(self):
         
-        result = self.df.iloc[:, :3]
+        result = self.df.iloc[:, :2]
         result['Kết quả học tập'] = self.rank_KQHT
         result['Danh hiệu'] = self.rank_DH
         
