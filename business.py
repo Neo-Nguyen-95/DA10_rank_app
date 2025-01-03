@@ -7,15 +7,12 @@ def reach_rank(df, upper, lower):
 
 
 class HLRanking:
-    def __init__(self, df, excel_include=True):
+    def __init__(self, df, lower_xs=6.5):
         self.df = df
         self.df_score = df.iloc[:, -8:]
         
         # Excellent reach
-        if excel_include == True:
-            self.reach_excel = reach_rank(self.df_score, upper=9, lower=8)
-        else:
-            self.reach_excel = 0
+        self.reach_excel = reach_rank(self.df_score, upper=9, lower=lower_xs)
         
         # Good reach
         self.reach_good = reach_rank(self.df_score, upper=8, lower=6.5)
@@ -32,24 +29,39 @@ class HLRanking:
                             self.reach_avg +
                             self.reach_ok)
         
-        mapping = {4: 'Xuất sắc',
-                   3: 'Tốt',
-                   2: 'Khá',
-                   1: 'Đạt',
-                   0: 'Không Đạt'}
+        mapping_KQHT = {4: 'Tốt',
+                        3: 'Tốt',
+                        2: 'Khá',
+                        1: 'Đạt',
+                        0: 'Không Đạt'}
         
-        self.rank = self.reach_total.map(mapping)
+        mapping_DH = {4: 'Xuất sắc',
+                      3: 'Giỏi',
+                      2: 'Không xét',
+                      1: 'Không xét',
+                      0: 'Không xét'}
+        
+             
+        self.rank_KQHT = self.reach_total.map(mapping_KQHT)
+        self.rank_DH = self.reach_total.map(mapping_DH)
         
     def get_rank(self):
         
         result = self.df.iloc[:, :3]
-        result['Xếp loại học lực'] = self.rank
+        result['Kết quả học tập'] = self.rank_KQHT
+        result['Danh hiệu'] = self.rank_DH
         
         return result
     
-    def get_stat(self):
+    def get_stat_KQHT(self):
         
-        result = self.rank.value_counts()
+        result = self.rank_KQHT.value_counts()
+        
+        return result
+    
+    def get_stat_DH(self):
+        
+        result = self.rank_DH.value_counts()
         
         return result
         

@@ -2,11 +2,6 @@ import streamlit as st
 import pandas as pd
 from business import HLRanking
 
-sample = pd.read_excel('data_sample.xlsx')
-hlr = HLRanking(sample)
-hlr.get_rank()
-hlr.get_stat()
-
 #%% I. Introduction & Usage
 st.title("Ứng Dụng Đánh Giá Kết Quả Học Tập Theo Thông Tư 22/2021/TT-BGDĐT")
 st.write("Ứng dụng hỗ trợ các thầy cô đánh giá kết quả học tập của học sinh một cách \
@@ -19,10 +14,7 @@ st.sidebar.markdown("""
                         
                     - Tự kiểm tra lại tính chính xác
                     
-                    ### Nguyên lí đánh giá:
-                        
-                    - Xuất sắc: Tất cả các môn có ĐTB ≥ 8,0, ít nhất 06 môn có ĐTB ≥ 9,0. (Đây là
-                    tiêu chí tham khảo, không được đề cập trong thông tư.)
+                    ### Nguyên lí đánh giá kết quả học tập (KQHT):
                         
                     - Tốt: Tất cả các môn có ĐTB ≥ 6,5, ít nhất 06 môn có ĐTB ≥ 8,0.
                     
@@ -30,7 +22,15 @@ st.sidebar.markdown("""
                     
                     - Đạt: Tất cả các môn có ĐTB ≥ 3,5, ít nhất 06 môn có ĐTB ≥ 5,0.
                     
-                    - Chưa Đạt: còn 
+                    - Chưa Đạt: còn lại.
+                    
+                    ### Nguyên lí xét danh hiệu:
+                    
+                    - Học sinh giỏi: KQHT loại Tốt.
+                    
+                    - Học sinh xuất sắc: KQHT loại Tốt & 6 môn có ĐTB ≥ 9,0.
+                    
+                    - Còn lại không xét danh hiệu khen thưởng.
                     """)
 
 st.markdown("""            
@@ -40,9 +40,13 @@ st.markdown("""
             
             Các cột cần có là:
                 
-            STT | Mã định danh | Họ và tên | (Ngày sinh) | (Giới tính) | Môn học x 8
+            |STT | Mã định danh | Họ và tên | (Ngày sinh) | (Giới tính) | Môn học x 8|
+            |- | - | - | - | - | - |
+            |... | ... | ... | ... | ... | ... |
+            |*Cần* | *Để trống nếu không có* | *Cần* | *Có hoặc không* | *Có hoặc không* | *Đủ 8 môn* |
+
             
-            *Phần trong ngoặc có thể có hoặc không*
+            Dưới đây là file mẫu, thầy cô có thể tham khảo.
             """)
 
 sample = pd.read_excel('data_sample.xlsx')
@@ -76,14 +80,18 @@ if uploaded_file is not None:
         
         left, buff, right = st.columns([10, 1, 4])
         with left:
-            "Kết quả xếp loại học lực:"
-            excel_include = st.checkbox('Tick nếu tính xếp loại "Xuất sắc"')
-            
-            hlr = HLRanking(data, excel_include=excel_include)
+            "**Kết quả xếp loại học lực:**"
+            lower_xs = st.number_input("Nhập điểm tối thiểu để xét danh hiệu xuất sắc:",
+                                       value=6.5)
+            hlr = HLRanking(data, lower_xs=lower_xs)
             st.dataframe(hlr.get_rank())
         with right:
-            "Thống kê:"
-            st.write(hlr.get_stat())
+            "**Thống kê:**"
+            "Kết quả học tập"
+            st.write(hlr.get_stat_KQHT())
+            
+            "Danh hiệu"
+            st.write(hlr.get_stat_DH())
             
         
         csv_data = hlr.get_rank().to_csv(index=False).encode('utf-8-sig')
